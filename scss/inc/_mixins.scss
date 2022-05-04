@@ -1,0 +1,124 @@
+//font family
+$primaryFont: 'HelveticaNeueCyr', sans-serif;
+
+//colors
+$black: #000;
+$white: #fff;
+$blue: #377FD5;
+$lightBlue: #E3E7EF;
+$darkBlue:#0B2248;
+$orange: #FF5F00;
+$lightOrange: #FDF7F4;
+$grey: #E7E7E7;
+$textGrey: #A5AEBC;
+
+//mixins
+$maxWidth: 1920;
+$rootFontSize: 16;
+
+@function rem($value) {
+	$remValue: ($value / $rootFontSize) + rem;
+	@return $remValue;
+}
+
+//convert px to em
+@function em($value, $const) {
+	$emValue: ($value / $const) + em;
+	@return $emValue;
+}
+
+//convert px to em
+@function vw($value) {
+	$vwValue: ($value / $maxWidth * 100) + vw;
+	@return $vwValue;
+}
+
+//hidden scrollbar
+@mixin no-scrollbar{
+	&::-webkit-scrollbar { width: 0; }
+	-ms-overflow-style: none;
+	overflow: -moz-scrollbars-none;
+}
+
+//add responsive size for properties between max and min design width
+@mixin responsive-property($property, $value) {
+	@media screen and (min-width: #{$maxWidth + px}) {
+		#{$property}: #{$value + px};
+	}
+	@media screen and (max-width: #{$maxWidth + px}) {
+		$coefficient: $maxWidth / 100;
+		$newValue: $value / $coefficient;
+		#{$property}: #{$newValue + vw};
+	}
+}
+
+//convert vertical padding from px to vw
+@mixin responsive-padding($paddingTopValue,$paddingBottomValue) {
+	@media screen and (min-width: #{$maxWidth + px}) {
+		padding-top: #{$paddingTopValue + px};
+		padding-bottom: #{$paddingBottomValue + px};
+	}
+	@media screen and (max-width: #{$maxWidth + px}) {
+		$coefficient: $maxWidth / 100;
+		$responsivePaddingTopValue: $paddingTopValue / $coefficient;
+		$responsivePaddingBottomValue: $paddingBottomValue / $coefficient;
+		padding-top: #{$responsivePaddingTopValue + vw};
+		padding-bottom: #{$responsivePaddingBottomValue + vw};
+	}
+}
+
+//add default styles for before and after
+@mixin bf-af{
+	position: absolute;
+	content: "";
+}
+
+//add background styles
+@mixin bg-set($bg_size){
+	background-size: $bg_size;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+//media queries
+@mixin mq-x-xl {
+  @media screen and (max-width: 1300px) {
+    @content;
+  }
+}
+
+@mixin mq-xl {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin mq-lg {
+  @media screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin mq-md {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mq-sm {
+  @media screen and (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin mq-x-sm {
+  @media screen and (max-width: 450px) {
+    @content;
+  }
+}
+
+@mixin mq-xx-sm {
+  @media screen and (max-width: 375px) {
+    @content;
+  }
+}
